@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>共栖之座 · 12 Scene 2D Exhibition</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f4efe5'/%3E%3Cpath d='M14 39c9-18 27-18 36-2' fill='none' stroke='%23b87335' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M18 42h31' stroke='%232a827b' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#f4efe5;
+  --milk:#fbf8f1;
+  --ink:#24241f;
+  --soft:#6f6a5f;
+  --hair:#d6cbb7;
+  --amber:#b87335;
+  --amber-2:#d7a263;
+  --teal:#2a827b;
+  --red:#b75043;
+  --veil:rgba(251,248,241,.74);
+  --line:rgba(91,81,64,.16);
+  --serif:"Songti SC","Hiragino Mincho ProN","Noto Serif CJK SC",serif;
+  --sans:"Avenir Next","PingFang SC","Noto Sans CJK SC",sans-serif;
+  --mono:"SFMono-Regular","JetBrains Mono",monospace;
+  --shadow:0 34px 110px rgba(54,45,32,.2);
+  --theme-body:#b87335;
+  --theme-memory:#8a6fb0;
+  --theme-machine:#2f6f8f;
+  --theme-care:#4f8a5d;
+  --theme-protocol:#2a827b;
+  --active-theme:var(--theme-body);
+  --active-theme-soft:rgba(184,115,53,.14);
+}
+html{height:100%;overflow:hidden}
+body{
+  height:100%;margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);letter-spacing:0;overflow:hidden;
+  background-image:
+    linear-gradient(rgba(72,65,53,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(72,65,53,.035) 1px, transparent 1px);
+  background-size:56px 56px;
+}
+button{font:inherit;color:inherit;background:transparent;border:0;cursor:pointer}
+body[data-active-theme="body"]{--active-theme:var(--theme-body);--active-theme-soft:rgba(184,115,53,.14)}
+body[data-active-theme="memory"]{--active-theme:var(--theme-memory);--active-theme-soft:rgba(138,111,176,.14)}
+body[data-active-theme="machine"]{--active-theme:var(--theme-machine);--active-theme-soft:rgba(47,111,143,.14)}
+body[data-active-theme="care"]{--active-theme:var(--theme-care);--active-theme-soft:rgba(79,138,93,.14)}
+body[data-active-theme="protocol"]{--active-theme:var(--theme-protocol);--active-theme-soft:rgba(42,130,123,.14)}
+.grain{position:fixed;inset:0;z-index:30;pointer-events:none;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E")}
+.nav{
+  position:fixed;z-index:22;top:0;left:0;right:0;height:82px;display:grid;grid-template-columns:minmax(170px,1fr) auto minmax(190px,1fr);align-items:center;
+  padding:13px 30px;background:rgba(250,247,239,.72);backdrop-filter:blur(22px);border-bottom:1px solid var(--line);
+}
+.brand small,.scene-index,.mono{font-family:var(--mono);font-size:11px;color:#8d887d;text-transform:uppercase}
+.brand h1{font-family:var(--serif);font-size:25px;line-height:1;margin:3px 0 0;font-weight:500}
+.scene-index{border:1px solid color-mix(in srgb,var(--active-theme) 32%,transparent);color:var(--active-theme);border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.58);transition:color .4s ease,border-color .4s ease}
+.nav-actions{justify-self:end;display:flex;gap:8px}
+.nav-actions button,.scene-pill,.deck-btn,.act-tab{
+  min-height:34px;padding:0 12px;border:1px solid rgba(87,78,63,.15);border-radius:8px;background:rgba(255,255,255,.58);
+  box-shadow:0 8px 22px rgba(55,47,36,.07);
+}
+.nav-actions button:hover,.scene-pill:hover,.deck-btn:hover,.act-tab:hover{background:rgba(255,255,255,.86);border-color:color-mix(in srgb,var(--active-theme) 45%,transparent)}
+.nav-actions .scene-index{align-self:center}
+.act-rail{justify-self:center;display:grid;grid-template-columns:repeat(5,minmax(104px,1fr));gap:7px;width:min(760px,52vw)}
+.act-tab{
+  min-height:44px;padding:7px 10px;text-align:left;display:grid;gap:2px;color:#6d665d;background:rgba(255,255,255,.42);
+  border-radius:7px;box-shadow:none;transition:background .35s ease,border-color .35s ease,color .35s ease,transform .35s ease;
+}
+.act-tab span{font-family:var(--mono);font-size:9px;text-transform:uppercase;color:inherit}
+.act-tab strong{font-family:var(--serif);font-size:12px;font-weight:500;line-height:1.15;white-space:normal;overflow:visible;text-overflow:clip}
+.act-tab.active{background:linear-gradient(180deg,var(--active-theme-soft),rgba(255,255,255,.68));border-color:color-mix(in srgb,var(--active-theme) 42%,transparent);color:var(--active-theme);transform:translateY(1px)}
+.scene-rail{position:fixed;z-index:21;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;align-items:center}
+.scene-pill{width:9px;height:9px;min-height:9px;padding:0;border-radius:999px;font-size:0;color:transparent;background:rgba(255,255,255,.5);box-shadow:0 0 0 1px rgba(60,51,40,.08),0 9px 20px rgba(55,47,36,.06)}
+.scene-pill.active{width:11px;height:28px;background:var(--active-theme);border-color:var(--active-theme);color:transparent}
+.deck-controls{position:fixed;z-index:22;left:30px;bottom:26px;display:flex;align-items:center;gap:9px}
+.deck-btn{width:42px;height:36px;padding:0;font-family:var(--mono);font-size:18px;color:#5e564c}
+.deck-progress{width:160px;height:2px;border-radius:999px;background:rgba(80,70,54,.16);overflow:hidden}
+.deck-progress span{display:block;height:100%;width:8.333%;background:linear-gradient(90deg,var(--active-theme),var(--teal));transition:width .7s cubic-bezier(.2,.82,.2,1),background .4s ease}
+#sceneRoot{position:fixed;inset:0;overflow:hidden;background:var(--paper)}
+.prologue-page,
+.act-transition-page,
+.ending-page,
+.scene-page{
+  position:absolute;inset:0;isolation:isolate;opacity:0;visibility:hidden;pointer-events:none;
+  transform:translate3d(6vw,0,0) scale(1.035);transition:opacity .85s cubic-bezier(.2,.82,.2,1),transform .95s cubic-bezier(.2,.82,.2,1),visibility 0s linear .95s;
+}
+.scene-page{
+  display:grid;grid-template-columns:minmax(340px,36vw) 1fr;
+  align-items:end;gap:36px;padding:112px 88px 56px;
+}
+.prologue-page.active,
+.act-transition-page.active,
+.ending-page.active,
+.scene-page.active{opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(0,0,0) scale(1);transition-delay:0s}
+.scene-page.previous{transform:translate3d(-5vw,0,0) scale(.985)}
+.act-transition-page.previous,.ending-page.previous{transform:translate3d(-5vw,0,0) scale(.985)}
+.prologue-page{
+  display:grid;grid-template-columns:minmax(420px,42vw) 1fr;align-items:end;gap:36px;padding:112px 88px 62px;
+}
+.prologue-page::before{
+  content:"";position:absolute;inset:82px 0 0;z-index:-3;background:
+    linear-gradient(90deg,rgba(244,239,229,.96) 0%,rgba(244,239,229,.68) 36%,rgba(244,239,229,.08) 66%),
+    radial-gradient(circle at 18% 20%,rgba(255,255,255,.82),transparent 28%),
+    linear-gradient(120deg,rgba(42,130,123,.18),transparent 42%);
+}
+.prologue-media{position:absolute;inset:82px 0 0;z-index:-4;margin:0;overflow:hidden;background:#d8ccba}
+.prologue-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(1.02)}
+.prologue-media::after{
+  content:"";position:absolute;inset:0;background:
+    linear-gradient(90deg,rgba(244,239,229,.96) 0%,rgba(244,239,229,.72) 33%,rgba(244,239,229,.12) 66%,rgba(20,15,10,.1) 100%),
+    linear-gradient(180deg,rgba(244,239,229,.24),transparent 44%,rgba(244,239,229,.18));
+}
+.prologue-panel{position:relative;z-index:6;max-width:680px}
+.prologue-kicker{font-family:var(--mono);font-size:12px;color:var(--theme-protocol);text-transform:uppercase;margin-bottom:16px}
+.prologue-title{font-family:var(--serif);font-size:clamp(54px,6vw,96px);line-height:.98;font-weight:500;margin:0 0 24px}
+.prologue-question{font-family:var(--serif);font-size:25px;line-height:1.52;margin:0 0 18px;color:#302d28}
+.prologue-copy{font-size:15px;line-height:1.9;color:#5f594f;max-width:560px;margin:0 0 26px}
+.prologue-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.prologue-actions button{min-height:42px;padding:0 18px;border-radius:8px;background:var(--theme-protocol);color:#fff;box-shadow:0 18px 48px rgba(42,130,123,.22)}
+.prologue-actions span{font-family:var(--mono);font-size:11px;color:#7c766d;text-transform:uppercase}
+.prologue-map{
+  position:relative;z-index:6;align-self:end;justify-self:end;width:min(430px,30vw);display:grid;gap:10px;margin-bottom:10px;
+  padding:18px 20px;border-left:2px solid var(--theme-protocol);background:rgba(251,248,241,.66);backdrop-filter:blur(16px);
+}
+.prologue-map strong{font-family:var(--mono);font-size:11px;color:var(--theme-protocol);text-transform:uppercase}
+.prologue-map p{margin:0;font-family:var(--serif);font-size:18px;line-height:1.55;color:#342f29}
+.act-transition-page,.ending-page{
+  display:grid;grid-template-columns:minmax(420px,42vw) 1fr;align-items:center;gap:42px;padding:112px 88px 62px;
+}
+.act-transition-page::before,.ending-page::before{
+  content:"";position:absolute;inset:82px 0 0;z-index:-3;background:
+    linear-gradient(90deg,rgba(244,239,229,.96),rgba(244,239,229,.68) 36%,rgba(244,239,229,.1) 68%),
+    radial-gradient(circle at 20% 22%,rgba(255,255,255,.82),transparent 30%),
+    linear-gradient(120deg,var(--active-theme-soft),transparent 46%);
+}
+.act-transition-media,.ending-media{position:absolute;inset:82px 0 0;z-index:-4;margin:0;overflow:hidden;background:#d8ccba}
+.act-transition-media img,.ending-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.88) contrast(1.03)}
+.act-transition-media::after,.ending-media::after{
+  content:"";position:absolute;inset:0;background:
+    linear-gradient(90deg,rgba(244,239,229,.98) 0%,rgba(244,239,229,.76) 34%,rgba(244,239,229,.14) 68%,rgba(20,15,10,.12) 100%),
+    linear-gradient(180deg,rgba(244,239,229,.18),transparent 44%,rgba(244,239,229,.2));
+}
+.act-transition-panel,.ending-panel{position:relative;z-index:6;max-width:660px}
+.act-transition-kicker,.ending-kicker{font-family:var(--mono);font-size:12px;color:var(--active-theme);text-transform:uppercase;margin-bottom:18px}
+.act-transition-title,.ending-title{font-family:var(--serif);font-size:clamp(52px,5.4vw,88px);line-height:1;font-weight:500;margin:0 0 22px}
+.act-transition-question,.ending-question{font-family:var(--serif);font-size:24px;line-height:1.52;margin:0 0 18px;color:#302d28}
+.act-transition-copy,.ending-copy{font-size:15px;line-height:1.9;color:#5f594f;max-width:560px;margin:0 0 26px}
+.act-transition-actions,.ending-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.act-transition-actions button,.ending-actions button{min-height:42px;padding:0 18px;border-radius:8px;background:var(--active-theme);color:#fff;box-shadow:0 18px 48px rgba(42,130,123,.18)}
+.transition-map,.ending-map{
+  position:relative;z-index:6;justify-self:end;width:min(430px,30vw);display:grid;gap:10px;padding:18px 20px;border-left:2px solid var(--active-theme);
+  background:rgba(251,248,241,.68);backdrop-filter:blur(16px);
+}
+.transition-map strong,.ending-map strong{font-family:var(--mono);font-size:11px;color:var(--active-theme);text-transform:uppercase}
+.transition-map p,.ending-map p{margin:0;font-family:var(--serif);font-size:18px;line-height:1.55;color:#342f29}
+.scene-page::before{
+  content:"";position:absolute;inset:82px 0 0;z-index:-3;background:
+    radial-gradient(circle at 20% 22%,rgba(255,255,255,.76),transparent 30%),
+    linear-gradient(90deg,rgba(244,239,229,.94) 0%,rgba(244,239,229,.62) 34%,rgba(244,239,229,.08) 58%,rgba(244,239,229,.22) 100%),
+    linear-gradient(90deg,var(--active-theme-soft),transparent 42%);
+}
+.scene-media{position:absolute;inset:82px 0 0;z-index:-4;margin:0;overflow:hidden;background:#d8ccba;transform:scale(1.04);transition:transform 1.25s cubic-bezier(.2,.82,.2,1),filter 1s ease}
+.scene-page.active .scene-media{transform:scale(1)}
+.scene-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.96) contrast(1.03)}
+.scene-media::after{
+  content:"";position:absolute;inset:0;background:
+    linear-gradient(90deg,rgba(244,239,229,.94) 0%,rgba(244,239,229,.62) 31%,rgba(244,239,229,.04) 61%,rgba(20,15,10,.14) 100%),
+    linear-gradient(180deg,rgba(244,239,229,.42),transparent 22%,rgba(244,239,229,.18) 100%);
+  z-index:2;pointer-events:none;
+}
+.media-toggle{
+  position:absolute;z-index:8;right:34px;top:104px;display:flex;overflow:hidden;border:1px solid rgba(91,81,64,.18);border-radius:8px;
+  background:rgba(251,248,241,.74);backdrop-filter:blur(18px);box-shadow:0 14px 36px rgba(47,41,31,.12);
+}
+.media-toggle button{min-width:48px;height:36px;padding:0 12px;font-family:var(--mono);font-size:11px;color:#6f6a5f}
+.media-toggle button.active[data-media-mode="2d"]{background:var(--amber);color:#fff}
+.media-toggle button.active[data-media-mode="3d"]{background:var(--teal);color:#fff}
+	.splat-stage{
+	  position:absolute;inset:0;z-index:1;display:none;overflow:hidden;pointer-events:auto;background:
+	    radial-gradient(circle at 45% 18%,rgba(255,250,240,.72),transparent 18%),
+	    linear-gradient(180deg,#e6e1d4 0%,#d1cec2 48%,#aeb1aa 49%,#6f7770 100%);
+	}
+	.splat-stage::before{
+	  content:"";position:absolute;left:13%;right:7%;bottom:-8%;height:58%;z-index:0;pointer-events:none;
+	  background:
+	    radial-gradient(circle at 18% 22%,rgba(255,255,255,.2) 0 1px,transparent 1.5px),
+	    radial-gradient(circle at 72% 58%,rgba(87,99,91,.18) 0 1px,transparent 1.6px),
+	    radial-gradient(ellipse at 48% 34%,rgba(236,229,211,.52),rgba(137,148,140,.26) 54%,rgba(74,83,78,.24) 82%);
+	  background-size:140px 140px,170px 170px,100% 100%;
+	  transform:perspective(900px) rotateX(61deg) translateY(18%);
+	  transform-origin:50% 100%;
+	  opacity:.84;
+	}
+	.splat-stage::after{
+	  content:"";position:absolute;inset:0;z-index:4;pointer-events:none;background:
+	    radial-gradient(ellipse at 49% 22%,rgba(255,251,238,.48),transparent 20%),
+	    radial-gradient(ellipse at 55% 61%,rgba(89,135,126,.12),transparent 36%),
+	    linear-gradient(90deg,rgba(249,244,232,.22),transparent 38%,rgba(30,36,33,.16));
+	  mix-blend-mode:screen;
+	  opacity:.72;
+	}
+	.splat-environment{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+	.splat-cyclorama{
+	  position:absolute;left:22%;right:6%;top:10%;height:70%;border-radius:48% 48% 0 0/18% 18% 0 0;
+	  background:
+	    radial-gradient(ellipse at 48% 23%,rgba(255,252,241,.64),rgba(236,232,218,.34) 36%,transparent 72%),
+	    linear-gradient(180deg,rgba(238,234,220,.62),rgba(194,196,186,.4) 64%,rgba(126,136,128,.18));
+	  box-shadow:inset 0 -110px 150px rgba(107,117,109,.18),inset 38px 0 90px rgba(255,255,255,.12);
+	}
+	.splat-softbox{
+	  position:absolute;left:43%;top:5%;width:30%;height:15%;border-radius:999px;
+	  background:radial-gradient(ellipse at center,rgba(255,252,238,.72),rgba(255,252,238,.18) 58%,transparent 78%);
+	  filter:blur(9px);
+	  opacity:.82;
+	}
+	.splat-terrazzo-floor{
+	  position:absolute;left:15%;right:4%;bottom:-1%;height:56%;
+	  background:
+	    radial-gradient(circle at 22% 28%,rgba(255,255,255,.18) 0 1px,transparent 1.4px),
+	    radial-gradient(circle at 66% 62%,rgba(64,82,75,.16) 0 1px,transparent 1.5px),
+	    radial-gradient(circle at 42% 74%,rgba(196,181,148,.16) 0 1px,transparent 1.6px),
+	    radial-gradient(ellipse at 50% 28%,rgba(231,224,207,.46),rgba(120,133,125,.25) 56%,rgba(50,59,55,.18) 84%);
+	  background-size:140px 140px,140px 140px,140px 140px,100% 100%;
+	  clip-path:ellipse(72% 58% at 55% 58%);
+	  filter:saturate(.86);
+	}
+	.splat-plinth-shadow{
+	  position:absolute;left:30%;right:17%;bottom:16%;height:18%;border-radius:50%;
+	  background:radial-gradient(ellipse at center,rgba(39,43,38,.34),rgba(39,43,38,.12) 48%,transparent 74%);
+	  transform:perspective(700px) rotateX(64deg);
+	  filter:blur(18px);
+	  opacity:.76;
+	}
+	.splat-spotlight{
+	  position:absolute;left:30%;top:-18%;width:56%;height:88%;
+	  background:conic-gradient(from 208deg at 50% 0%,transparent 0 19%,rgba(255,247,224,.16) 22% 34%,transparent 38% 100%);
+	  filter:blur(18px);
+	  opacity:.62;
+	}
+	.splat-ambient-wash{
+	  position:absolute;inset:0;
+	  background:
+	    radial-gradient(ellipse at 22% 26%,rgba(255,255,255,.28),transparent 36%),
+	    linear-gradient(90deg,rgba(247,241,226,.52) 0%,rgba(247,241,226,.12) 36%,transparent 64%);
+	  opacity:.76;
+	}
+.scene-media.mode-3d{z-index:3;pointer-events:auto}
+.scene-media.mode-3d img{opacity:0;visibility:hidden}
+.scene-media.mode-3d .splat-stage{display:block}
+.scene-media.mode-3d::after{
+  background:
+    linear-gradient(90deg,rgba(244,239,229,.72) 0%,rgba(244,239,229,.32) 27%,rgba(244,239,229,.02) 54%,rgba(35,38,34,.08) 100%),
+    linear-gradient(180deg,rgba(244,239,229,.1),transparent 40%,rgba(244,239,229,.04));
+}
+	.splat-stage canvas{position:absolute!important;inset:0!important;z-index:2!important;width:100%!important;height:100%!important}
+.splat-loading,.splat-error{
+  position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);width:min(320px,calc(100vw - 56px));
+  padding:18px 20px;border:1px solid rgba(251,248,241,.18);border-radius:8px;background:rgba(24,22,17,.78);color:#f6eddf;
+  text-align:center;box-shadow:0 18px 60px rgba(0,0,0,.24);backdrop-filter:blur(12px);
+}
+.splat-loading{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:#d7a263}
+.splat-error strong{display:block;font-family:var(--serif);font-size:20px;font-weight:500;margin-bottom:8px}
+.splat-error p{margin:0 0 14px;font-size:13px;line-height:1.6;color:#d5c7b4}
+.splat-error button{min-height:34px;padding:0 12px;border-radius:8px;background:var(--teal);color:#fff;font-family:var(--mono);font-size:11px}
+.scene-panel{
+  position:relative;z-index:6;max-width:520px;padding:0 0 34px;align-self:end;transform:translateY(28px);opacity:0;transition:transform .8s cubic-bezier(.2,.82,.2,1) .16s,opacity .7s ease .16s;
+}
+.scene-page.active .scene-panel{transform:translateY(0);opacity:1}
+.act-label{font-family:var(--mono);font-size:12px;letter-spacing:0;color:var(--active-theme);text-transform:uppercase;margin-bottom:16px;transition:color .4s ease}
+.scene-title{font-family:var(--serif);font-size:clamp(46px,5.5vw,84px);line-height:.98;font-weight:500;margin:0 0 18px}
+.scene-question{font-family:var(--serif);font-size:22px;line-height:1.55;margin:0 0 18px;color:#393934}
+.scene-copy{font-size:15px;line-height:1.9;color:var(--soft);margin:0;max-width:460px}
+.scene-meta{display:flex;align-items:center;gap:12px;margin:0 0 22px}
+.scene-no{font-family:var(--mono);font-size:13px;color:#fff;background:var(--active-theme);border-radius:999px;padding:8px 12px;transition:background .4s ease}
+.scene-change{font-family:var(--mono);font-size:11px;color:#5f594f;text-transform:uppercase;border:1px solid color-mix(in srgb,var(--active-theme) 24%,transparent);border-radius:999px;background:rgba(255,255,255,.52);padding:8px 10px}
+.protocol{
+  position:relative;z-index:6;align-self:end;justify-self:end;width:min(420px,28vw);margin-bottom:10px;padding:18px 20px;border-left:2px solid var(--active-theme);
+  background:linear-gradient(90deg,rgba(251,248,241,.76),rgba(251,248,241,.34));backdrop-filter:blur(16px);
+  transform:translateY(22px);opacity:0;transition:transform .8s cubic-bezier(.2,.82,.2,1) .28s,opacity .7s ease .28s;
+}
+.scene-page.active .protocol{transform:translateY(0);opacity:1}
+.protocol strong{display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--active-theme);margin-bottom:9px;transition:color .4s ease}
+.protocol p{margin:0;font-family:var(--serif);font-size:19px;line-height:1.55;color:#342f29}
+.keywords{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.keywords span{font-family:var(--mono);font-size:11px;color:#5f594f;border:1px solid color-mix(in srgb,var(--active-theme) 24%,transparent);background:rgba(255,255,255,.44);border-radius:999px;padding:7px 10px}
+.scene-page:nth-child(4n+2) .scene-media::after{
+  background:
+    linear-gradient(90deg,rgba(244,239,229,.9) 0%,rgba(244,239,229,.48) 30%,rgba(244,239,229,.02) 60%,rgba(20,15,10,.1) 100%),
+    linear-gradient(180deg,rgba(244,239,229,.22),transparent 50%,rgba(244,239,229,.2) 100%);
+}
+.scene-page.final-scene{
+  grid-template-columns:minmax(380px,34vw) 1fr;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(224,213,193,.2));
+}
+.scene-page.final-scene .scene-title{font-size:clamp(48px,4.4vw,76px);line-height:1.04}
+@media(max-width:980px){
+  html,body{overflow:hidden}
+  .nav{grid-template-columns:1fr auto;height:auto;padding:12px 16px;gap:10px}.brand small,.scene-index{display:none}.brand h1{font-size:22px}
+  .act-rail{position:fixed;left:16px;right:16px;top:58px;width:auto;grid-template-columns:repeat(5,1fr);gap:4px;z-index:23}
+  .act-tab{min-height:4px;height:4px;padding:0;border-radius:999px;font-size:0;background:rgba(255,255,255,.55)}
+  .act-tab span,.act-tab strong{display:none}
+  .act-tab.active{background:var(--active-theme);transform:none}
+  .nav-actions button{min-height:32px;padding:0 10px}
+  .scene-rail{display:none}
+  .deck-controls{left:18px;bottom:16px}.deck-progress{width:118px}
+  .prologue-page{display:flex;flex-direction:column;justify-content:flex-end;padding:94px 18px 72px;gap:12px}
+  .act-transition-page,.ending-page{display:flex;flex-direction:column;justify-content:flex-end;padding:94px 18px 72px;gap:12px}
+  .prologue-page::before{inset:62px 0 0;background:linear-gradient(180deg,rgba(244,239,229,.1),rgba(244,239,229,.76) 56%,rgba(244,239,229,.98))}
+  .act-transition-page::before,.ending-page::before{inset:62px 0 0;background:linear-gradient(180deg,rgba(244,239,229,.08),rgba(244,239,229,.76) 58%,rgba(244,239,229,.98))}
+  .prologue-media{inset:62px 0 0}
+  .act-transition-media,.ending-media{inset:62px 0 0}
+  .prologue-media::after{background:linear-gradient(180deg,rgba(244,239,229,.08),rgba(244,239,229,.18) 32%,rgba(244,239,229,.86) 68%,rgba(244,239,229,.98))}
+  .act-transition-media::after,.ending-media::after{background:linear-gradient(180deg,rgba(244,239,229,.06),rgba(244,239,229,.18) 34%,rgba(244,239,229,.86) 68%,rgba(244,239,229,.98))}
+  .prologue-panel{max-width:none}
+  .act-transition-panel,.ending-panel{max-width:none}
+  .prologue-title{font-size:48px}
+  .act-transition-title,.ending-title{font-size:44px}
+  .prologue-question{font-size:20px}
+  .act-transition-question,.ending-question{font-size:20px}
+  .prologue-copy{font-size:14px;line-height:1.72;margin-bottom:18px}
+  .act-transition-copy,.ending-copy{font-size:14px;line-height:1.72;margin-bottom:18px}
+  .prologue-map{width:auto;justify-self:auto;align-self:stretch;margin:0;padding:13px 14px;background:rgba(251,248,241,.72)}
+  .transition-map,.ending-map{width:auto;justify-self:auto;align-self:stretch;margin:0;padding:13px 14px;background:rgba(251,248,241,.72)}
+  .prologue-map p{font-size:15px}
+  .transition-map p,.ending-map p{font-size:15px}
+  .scene-page{display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;padding:92px 18px 72px;gap:12px}
+  .scene-page::before{inset:62px 0 0;background:linear-gradient(180deg,rgba(244,239,229,.12),rgba(244,239,229,.72) 58%,rgba(244,239,229,.98))}
+  .scene-media{inset:62px 0 0}
+  .scene-media::after{background:linear-gradient(180deg,rgba(244,239,229,.06),rgba(244,239,229,.16) 34%,rgba(244,239,229,.86) 67%,rgba(244,239,229,.98))}
+  .scene-media.mode-3d::after{background:linear-gradient(180deg,rgba(244,239,229,.06),rgba(244,239,229,.2) 48%,rgba(244,239,229,.9) 82%,rgba(244,239,229,.96))}
+  .media-toggle{right:50%;top:78px;transform:translateX(50%)}
+  .scene-panel{padding:0;max-width:none}
+  .scene-meta{margin-bottom:16px}
+  .scene-title{font-size:42px}.scene-question{font-size:19px}.scene-copy{font-size:14px;line-height:1.75}
+  .protocol{position:relative;align-self:stretch;justify-self:auto;width:auto;margin:0;padding:13px 14px;border-left-width:2px;background:rgba(251,248,241,.72)}
+  .protocol p{font-size:15px;line-height:1.55}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<header class="nav">
+  <div class="brand"><small>12 Scene AIGC Exhibition</small><h1>共栖之座</h1></div>
+  <nav class="act-rail" id="actRail" aria-label="Act navigation"></nav>
+  <div class="nav-actions">
+    <div class="scene-index" id="sceneIndex">Scene 01 / 12</div>
+    <button data-target="#scene01">开始</button>
+    <button data-target="#scene12">最终图</button>
+  </div>
+</header>
+<nav class="scene-rail" id="sceneRail" aria-label="Scene navigation"></nav>
+<div class="deck-controls" aria-label="Slide controls">
+  <button class="deck-btn" id="prevScene" aria-label="上一幕">‹</button>
+  <div class="deck-progress" aria-hidden="true"><span id="deckProgress"></span></div>
+  <button class="deck-btn" id="nextScene" aria-label="下一幕">›</button>
+</div>
+<main id="sceneRoot"></main>
+
+<script>
+const acts = [
+  { no: 'Act 01', title: 'Body Enters', theme: 'body', startScene: 1, range: '01-03' },
+  { no: 'Act 02', title: 'Memory Sediments', theme: 'memory', startScene: 4, range: '04-05' },
+  { no: 'Act 03', title: 'Machine Joins', theme: 'machine', startScene: 6, range: '06-08' },
+  { no: 'Act 04', title: 'Mutual Care', theme: 'care', startScene: 9, range: '09-10' },
+  { no: 'Act 05', title: 'Coexistence Protocol', theme: 'protocol', startScene: 11, range: '11-12' }
+];
+
+const scenes = [
+  {
+    id: 1,
+    act: 'Act 01 · Body Enters',
+    title: '空物尚未成座',
+    question: '在身体进入之前，椅子已经是椅子了吗？',
+    copy: '最初的物只有轮廓、材料和潜在结构，还没有记忆，也没有判断。它不是完成品，而是一段关系尚未被启动的界面。',
+    change: 'empty object',
+    protocol: '物先保持开放，等待身体、环境和后来者共同写入第一组关系参数。',
+	    img: 'assets/renders/2d-scenes/scene-01.png',
+	    model: 'assets/renders/3d/scene-01.ply',
+	    modelCamera: {
+	      cameraUp: [0, 0, 1],
+	      initialCameraPosition: [0, -1.45, 0.3],
+	      initialCameraLookAt: [0, 0, -0.08]
+	    },
+	    autoRotate: { enabled: true, speed: 0.36 },
+	    tags: ['未完成物', '空场', '关系潜能']
+	  },
+  {
+    id: 2,
+    act: 'Act 01 · Body Enters',
+    title: '身体进入协议',
+    question: '当物开始感知身体，读取是否必然等于监控？',
+    copy: '人的姿态、重心和疲劳进入系统。这里的扫描不是为了把身体压缩成数据点，而是让物第一次承认使用者处在某种状态中。',
+    change: 'body enters',
+    protocol: '身体数据必须保持可解释：它是协商入口，而不是系统对人的判决。',
+    img: 'assets/renders/2d-scenes/scene-02.png',
+    tags: ['姿态读取', '重心', '疲劳状态']
+  },
+  {
+    id: 3,
+    act: 'Act 01 · Body Enters',
+    title: '压力生成形态',
+    question: '压力能否变成物的语言？',
+    copy: '座面下沉，支撑肋与热区出现，压力被翻译成可见的形态语言。身体不只是输入数据，而是参与了这件物的生成。',
+    change: 'first deformation',
+    protocol: '压力不是偏差，而是支撑结构、软硬分布和边界调整的第一批约束。',
+    img: 'assets/renders/2d-scenes/scene-03.png',
+    tags: ['压力热区', '支撑肋', '形态生成']
+  },
+  {
+    id: 4,
+    act: 'Act 02 · Memory Sediments',
+    title: '触碰沉积为纹理',
+    question: '物的记忆一定要成为精确日志吗？',
+    copy: '身体离开后，触碰没有完全消失，而是像矿物纹理一样沉积在表面。记忆被降为材料痕迹，而不是可追踪的身体档案。',
+    change: 'touch memory',
+    protocol: '记忆以低分辨率存在，避免把亲密的身体经验转化为过度精确的记录。',
+    img: 'assets/renders/2d-scenes/scene-04.png',
+    tags: ['触碰', '低分辨率', '材料记忆']
+  },
+  {
+    id: 5,
+    act: 'Act 02 · Memory Sediments',
+    title: '记忆壳体过滤',
+    question: '物可以记住，但它能否有边界地记住？',
+    copy: '半透明壳体围绕座面生长，既保护记忆，也过滤记忆。开口、缺口和遮蔽让遗忘成为系统的一部分。',
+    change: 'memory shell',
+    protocol: '保存、遮蔽和遗忘必须同时可见，记忆才不会滑向无边界占有。',
+    img: 'assets/renders/2d-scenes/scene-05.png',
+    tags: ['壳体', '过滤', '遗忘']
+  },
+  {
+    id: 6,
+    act: 'Act 03 · Machine Joins',
+    title: '非人体主体靠近',
+    question: '机器进入后，它是工具、客人，还是另一个身体？',
+    copy: '机器靠近这件物，关系不再只有人和家具。它带来另一种重量、距离、能量节奏和休眠需求。',
+    change: 'machine subject',
+	    protocol: '机器不是附属配件，它以自己的维护条件进入共处关系。',
+	    img: 'assets/renders/2d-scenes/scene-06.png',
+	    model: 'assets/renders/3d/scene6-chair-with-robot.ply',
+	    modelCamera: {
+	      cameraUp: [0, 0, 1],
+	      initialCameraPosition: [0, -1.25, 0.22],
+	      initialCameraLookAt: [0, 0, 0.18]
+	    },
+	    autoRotate: { enabled: true, speed: 0.32 },
+	    tags: ['非人体主体', '距离', '能量需求']
+	  },
+  {
+    id: 7,
+    act: 'Act 03 · Machine Joins',
+    title: '接口从需求中长出',
+    question: '当机器也需要停靠，接口是装饰还是协议？',
+    copy: '停靠槽、接触端口和充电界面从家具侧面生成。它们不是外加装饰，而是由共处、维护和退出需求共同塑成的结构。',
+    change: 'docking interface',
+    protocol: '接口需要表达能量、方向、权限和退出路径，让连接关系保持可见。',
+    img: 'assets/renders/2d-scenes/scene-07.png',
+    tags: ['停靠槽', '充电界面', '退出路径']
+  },
+  {
+    id: 8,
+    act: 'Act 03 · Machine Joins',
+    title: 'AI 显影冲突',
+    question: 'AI 应该给答案，还是把冲突显影？',
+    copy: '人的舒适、机器的充电、材料的记忆、隐私和距离同时出现。AI 不给出唯一最优答案，而是把冲突转化成可见、可修改的协议层。',
+    change: 'negotiation layer',
+    protocol: '调停不是替代选择，而是在多方约束之间显影一份可被修改的临时草案。',
+    img: 'assets/renders/2d-scenes/scene-08.png',
+    tags: ['AI 协商', '隐私边界', '冲突显影']
+  },
+  {
+    id: 9,
+    act: 'Act 04 · Mutual Care',
+    title: '人的休息被照护',
+    question: '照护如何不变成替人决定？',
+    copy: '靠背、软硬、遮蔽和距离被重新组织。家具支撑人的休息，但不把舒适变成控制，也不吞没人的选择。',
+    change: 'human care',
+    protocol: '照护以支撑开始，但必须保留人的主动性、拒绝权和退出空间。',
+    img: 'assets/renders/2d-scenes/scene-09.png',
+    tags: ['休息', '边界', '拒绝权']
+  },
+  {
+    id: 10,
+    act: 'Act 04 · Mutual Care',
+    title: '机器也进入休眠',
+    question: '机器也需要被照护时，人是否仍是唯一中心？',
+    copy: '机器进入休眠或充电，家具生成另一种安静的支撑。能源补给、维护周期和距离边界被放到同一个界面上。',
+    change: 'machine care',
+    protocol: '互相照护要求系统承认不同主体都有疲劳、维护和暂停的需求。',
+    img: 'assets/renders/2d-scenes/scene-10.png',
+    tags: ['机器休眠', '能源维护', '暂停']
+  },
+  {
+    id: 11,
+    act: 'Act 05 · Coexistence Protocol',
+    title: '关系层开始合成',
+    question: '共处能否被设计成一个始终可调整的系统？',
+    copy: '人的轨迹、机器接口、记忆壳体和 AI 协商层开始汇合。家具不再偏向单一主体，而是承载关系本身。',
+    change: 'relation synthesis',
+    protocol: '人的舒适、机器维护、材料记忆和隐私边界必须同时进入形态生成。',
+    img: 'assets/renders/2d-scenes/scene-11.png',
+    tags: ['关系合成', '协议环', '边界协商']
+  },
+  {
+    id: 12,
+    act: 'Act 05 · Coexistence Protocol',
+    title: '临时平衡的形态',
+    question: '共栖形态是一件产品，还是一种持续维护的关系？',
+    copy: '最终图不是椅子的完成图，而是身体、机器、记忆、拒绝权和照护共同构成的临时平衡。它可以进入，也可以暂停；可以记住，也可以遗忘。',
+    change: 'final protocol',
+    protocol: '物成为关系的组织者：可进入、可协商、可暂停，也可在下一次共处中重新生成。',
+    img: 'assets/renders/2d-scenes/scene-12.png',
+    tags: ['共栖协议', '临时平衡', '持续维护'],
+    final: true
+  }
+];
+
+const actTransitions = [
+  {
+    id: 'act02',
+    from: 'Act 01 · Body Enters',
+    to: 'Act 02 · Memory Sediments',
+    theme: 'memory',
+    targetScene: 4,
+    title: '身体离开后，触碰没有完全消失',
+    question: '当使用痕迹开始滞留，家具还只是当下的工具吗？',
+    copy: '第一幕让身体成为形态生成的参与者。下一组场景转向滞留：压力、触碰和停留不再只是瞬时输入，而是在材料表面沉积成有边界的记忆。',
+    thesis: '从身体参数进入材料记忆，物开始拥有时间，也必须拥有遗忘。',
+    img: 'assets/renders/2d-scenes/scene-04.png'
+  },
+  {
+    id: 'act03',
+    from: 'Act 02 · Memory Sediments',
+    to: 'Act 03 · Machine Joins',
+    theme: 'machine',
+    targetScene: 6,
+    title: '记忆之后，另一个主体靠近',
+    question: '当机器也进入这件物，共处关系还能只围绕人展开吗？',
+    copy: '记忆壳体建立了保存与遗忘的边界，但新的主体很快重新定义这些边界。机器带着能量、距离、停靠和维护需求进入，家具必须开始回应多种身体。',
+    thesis: '从人的痕迹转向机器的姿态，椅子成为多主体关系界面。',
+    img: 'assets/renders/2d-scenes/scene-06.png'
+  },
+  {
+    id: 'act04',
+    from: 'Act 03 · Machine Joins',
+    to: 'Act 04 · Mutual Care',
+    theme: 'care',
+    targetScene: 9,
+    title: '接口生成后，照护变成互相维护',
+    question: '如果机器也需要休眠和维护，照护还只是人类特权吗？',
+    copy: '停靠、充电与协议层让连接关系可见。下一组场景把连接推进为照护：人的休息和机器的维护必须在同一个界面中被同时安排。',
+    thesis: '从连接接口转向互相照护，共处变成持续维护的周期。',
+    img: 'assets/renders/2d-scenes/scene-09.png'
+  },
+  {
+    id: 'act05',
+    from: 'Act 04 · Mutual Care',
+    to: 'Act 05 · Coexistence Protocol',
+    theme: 'protocol',
+    targetScene: 11,
+    title: '照护之后，关系需要协议',
+    question: '当舒适、维护、记忆和拒绝权同时存在，形态如何不偏向单一主体？',
+    copy: '互相照护让多方需求同时出现。最后一组场景把这些需求合成为可进入、可协商、可暂停、也可重新生成的协议形态。',
+    thesis: '从互相照护转向共栖协议，最终形态是一种临时平衡。',
+    img: 'assets/renders/2d-scenes/scene-12.png'
+  }
+];
+
+const ending = {
+  title: '共栖不是终点',
+  question: '最终图之后，关系仍然需要被维护。',
+  copy: '这件物没有把人、机器、材料和 AI 固定成一个单一答案。它更像一个持续运行的界面：允许进入，允许协商，允许暂停，也允许下一次重新生成。',
+  thesis: '共栖之座的完成，不是形式结束，而是关系维护的开始。',
+  img: 'assets/renders/2d-scenes/scene-12.png'
+};
+
+const root = document.getElementById('sceneRoot');
+const sceneRail = document.getElementById('sceneRail');
+const actRail = document.getElementById('actRail');
+const sceneIndex = document.getElementById('sceneIndex');
+const deckProgress = document.getElementById('deckProgress');
+const two = (value) => String(value).padStart(2, '0');
+let currentScene = 0;
+let lastWheelAt = 0;
+let touchStartedIn3D = false;
+const SPLAT_VIEWER_URL = 'https://esm.sh/@mkkellogg/gaussian-splats-3d@0.4.7';
+const splatViewers = new Map();
+let splatModulePromise = null;
+const DEFAULT_MODEL_CAMERA = {
+  cameraUp: [0, 0, 1],
+  initialCameraPosition: [0, -2.2, 0.85],
+  initialCameraLookAt: [0, 0, 0.45]
+};
+
+const findActForScene = (sceneId) => [...acts].reverse().find((act) => sceneId >= act.startScene);
+scenes.forEach((scene) => {
+  const act = findActForScene(scene.id);
+  scene.theme = act.theme;
+  scene.actNo = act.no;
+  scene.actRange = act.range;
+});
+
+const prologue = document.createElement('section');
+prologue.className = 'prologue-page';
+prologue.id = 'prologue';
+prologue.setAttribute('aria-label', '策展序章');
+prologue.innerHTML = `
+  <figure class="prologue-media">
+    <img src="assets/renders/2d-scenes/scene-12.png" alt="共栖之座最终形态" decoding="async" fetchpriority="high">
+  </figure>
+  <div class="prologue-panel">
+    <div class="prologue-kicker">Curatorial Prologue · Non-physical Web Exhibition</div>
+    <h2 class="prologue-title">为什么是共栖之座？</h2>
+    <p class="prologue-question">当一件家具开始感知身体、记住触碰、接纳机器，并通过 AI 显影冲突，它还只是一件被人使用的物吗？</p>
+    <p class="prologue-copy">这是一个非实物设计项目，最终呈现为 12 幕网页展陈。它把“椅子”重新定义为关系界面：人的舒适、机器维护、材料记忆、隐私边界、拒绝权与 AI 调停，在同一件物中被不断协商。</p>
+    <div class="prologue-actions">
+      <button type="button" data-target="#scene01">进入 12 幕</button>
+      <span>Body · Memory · Machine · Care · Protocol</span>
+    </div>
+  </div>
+  <aside class="prologue-map">
+    <strong>Exhibition Thesis</strong>
+    <p>共栖之座不是一张椅子的完成图，而是一个持续维护的多主体共处协议。</p>
+  </aside>
+`;
+root.appendChild(prologue);
+
+for (const act of acts) {
+  const btn = document.createElement('button');
+  btn.className = 'act-tab';
+  btn.type = 'button';
+  btn.dataset.actTheme = act.theme;
+  btn.innerHTML = `<span>${act.no} · ${act.range}</span><strong>${act.title}</strong>`;
+  btn.addEventListener('click', () => goToScene(act.startScene));
+  actRail.appendChild(btn);
+}
+
+for (const scene of scenes) {
+  const section = document.createElement('section');
+  section.className = `scene-page${scene.final ? ' final-scene' : ''}`;
+  section.id = `scene${two(scene.id)}`;
+  section.dataset.actTheme = scene.theme;
+  section.innerHTML = `
+    <figure class="scene-media">
+      <img src="${scene.img}" alt="${scene.title}" decoding="async" ${scene.id === 1 ? 'fetchpriority="high"' : ''}>
+      ${scene.model ? `
+        <div class="splat-stage" data-model="${scene.model}">
+          <div class="splat-loading">Loading 3D model...</div>
+        </div>
+      ` : ''}
+    </figure>
+    ${scene.model ? `
+      <div class="media-toggle" role="group" aria-label="Scene media mode">
+        <button class="active" type="button" data-media-mode="2d" data-scene-id="${scene.id}">2D</button>
+        <button type="button" data-media-mode="3d" data-scene-id="${scene.id}">3D</button>
+      </div>
+    ` : ''}
+    <div class="scene-panel">
+      <div class="scene-meta">
+        <span class="scene-no">Scene ${two(scene.id)}</span>
+        <span class="scene-change">${scene.change}</span>
+      </div>
+      <div class="act-label">${scene.act}</div>
+      <h2 class="scene-title">${scene.title}</h2>
+      <p class="scene-question">${scene.question}</p>
+      <p class="scene-copy">${scene.copy}</p>
+      <div class="keywords">${scene.tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
+    </div>
+    <aside class="protocol">
+      <strong>Protocol Layer</strong>
+      <p>${scene.protocol}</p>
+    </aside>
+  `;
+  root.appendChild(section);
+
+  const btn = document.createElement('button');
+  btn.className = 'scene-pill';
+  btn.textContent = two(scene.id);
+  btn.addEventListener('click', () => goToScene(scene.id));
+  sceneRail.appendChild(btn);
+}
+
+for (const item of actTransitions) {
+  const transition = document.createElement('section');
+  transition.className = 'act-transition-page';
+  transition.id = item.id;
+  transition.dataset.actTheme = item.theme;
+  transition.dataset.targetScene = String(item.targetScene);
+  transition.innerHTML = `
+    <figure class="act-transition-media">
+      <img src="${item.img}" alt="${item.title}" decoding="async">
+    </figure>
+    <div class="act-transition-panel">
+      <div class="act-transition-kicker">${item.from} → ${item.to}</div>
+      <h2 class="act-transition-title">${item.title}</h2>
+      <p class="act-transition-question">${item.question}</p>
+      <p class="act-transition-copy">${item.copy}</p>
+      <div class="act-transition-actions">
+        <button type="button" data-target="#scene${two(item.targetScene)}">进入下一章</button>
+      </div>
+    </div>
+    <aside class="transition-map">
+      <strong>Transition Thesis</strong>
+      <p>${item.thesis}</p>
+    </aside>
+  `;
+  root.appendChild(transition);
+}
+
+const endingPage = document.createElement('section');
+endingPage.className = 'ending-page';
+endingPage.id = 'ending';
+endingPage.setAttribute('aria-label', '结尾');
+endingPage.innerHTML = `
+  <figure class="ending-media">
+    <img src="${ending.img}" alt="共栖之座结尾" decoding="async">
+  </figure>
+  <div class="ending-panel">
+    <div class="ending-kicker">Ending · After Scene 12</div>
+    <h2 class="ending-title">${ending.title}</h2>
+    <p class="ending-question">${ending.question}</p>
+    <p class="ending-copy">${ending.copy}</p>
+    <div class="ending-actions">
+      <button type="button" data-target="#scene01">重新观看</button>
+    </div>
+  </div>
+  <aside class="ending-map">
+    <strong>Closing Thesis</strong>
+    <p>${ending.thesis}</p>
+  </aside>
+`;
+root.appendChild(endingPage);
+
+document.querySelectorAll('[data-target]').forEach((btn) => {
+  btn.addEventListener('click', () => goToScene(Number(btn.dataset.target.replace('#scene', ''))));
+});
+
+const prologuePage = document.querySelector('.prologue-page');
+const transitionPages = [...document.querySelectorAll('.act-transition-page')];
+const transitionPageById = new Map(transitionPages.map((page) => [page.id, page]));
+const scenePages = [...document.querySelectorAll('.scene-page')];
+const scenePills = [...document.querySelectorAll('.scene-pill')];
+const actTabs = [...document.querySelectorAll('.act-tab')];
+
+const deckItems = [
+  { type: 'prologue' },
+  { type: 'scene', sceneId: 1 },
+  { type: 'scene', sceneId: 2 },
+  { type: 'scene', sceneId: 3 },
+  { type: 'transition', id: 'act02' },
+  { type: 'scene', sceneId: 4 },
+  { type: 'scene', sceneId: 5 },
+  { type: 'transition', id: 'act03' },
+  { type: 'scene', sceneId: 6 },
+  { type: 'scene', sceneId: 7 },
+  { type: 'scene', sceneId: 8 },
+  { type: 'transition', id: 'act04' },
+  { type: 'scene', sceneId: 9 },
+  { type: 'scene', sceneId: 10 },
+  { type: 'transition', id: 'act05' },
+  { type: 'scene', sceneId: 11 },
+  { type: 'scene', sceneId: 12 },
+  { type: 'ending' }
+];
+let currentStepIndex = 0;
+
+const clampScene = (value) => Math.min(scenes.length, Math.max(0, value));
+const clampStep = (value) => Math.min(deckItems.length - 1, Math.max(0, value));
+const getSceneById = (sceneId) => scenes.find((scene) => scene.id === Number(sceneId));
+const getTransitionById = (id) => actTransitions.find((item) => item.id === id);
+
+const loadSplatModule = () => {
+  if (!splatModulePromise) {
+    splatModulePromise = import(SPLAT_VIEWER_URL);
+  }
+  return splatModulePromise;
+};
+
+const setMediaMode = (sceneId, mode) => {
+  const page = document.getElementById(`scene${two(sceneId)}`);
+  const media = page?.querySelector('.scene-media');
+  if (!media) return;
+  media.classList.toggle('mode-3d', mode === '3d');
+  page.querySelectorAll('.media-toggle button').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.mediaMode === mode);
+  });
+};
+
+const show2D = (sceneId) => setMediaMode(Number(sceneId), '2d');
+
+const show3DError = (stage, sceneId, message) => {
+  stage.innerHTML = `
+    <div class="splat-error">
+      <strong>3D model failed to load</strong>
+      <p>${message}</p>
+      <button type="button">Back to 2D</button>
+    </div>
+  `;
+  stage.querySelector('button').addEventListener('click', () => show2D(sceneId));
+};
+
+const renderSplatEnvironment = (stage) => {
+  stage.innerHTML = `
+    <div class="splat-environment" aria-hidden="true">
+      <div class="splat-cyclorama"></div>
+      <div class="splat-softbox"></div>
+      <div class="splat-terrazzo-floor"></div>
+      <div class="splat-plinth-shadow"></div>
+      <div class="splat-spotlight"></div>
+      <div class="splat-ambient-wash"></div>
+    </div>
+  `;
+};
+
+const configureAutoRotate = (viewer, scene) => {
+  if (!scene.autoRotate?.enabled) return null;
+  const speed = scene.autoRotate.speed ?? 0.32;
+  const controls = viewer.controls || viewer.orbitControls;
+  if (controls && 'autoRotate' in controls) {
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = speed;
+    return null;
+  }
+  const camera = viewer.camera;
+  const cameraConfig = scene.modelCamera || DEFAULT_MODEL_CAMERA;
+  const lookAt = cameraConfig.initialCameraLookAt;
+  const start = cameraConfig.initialCameraPosition;
+  if (!camera?.position?.set || !camera.lookAt || !Array.isArray(lookAt) || !Array.isArray(start)) return null;
+  const radius = Math.hypot(start[0] - lookAt[0], start[1] - lookAt[1]);
+  const baseAngle = Math.atan2(start[1] - lookAt[1], start[0] - lookAt[0]);
+  const cameraHeight = start[2];
+  let frameId = null;
+  const rotate = (time = 0) => {
+    const angle = baseAngle + time * speed * 0.00018;
+    camera.position.set(
+      lookAt[0] + Math.cos(angle) * radius,
+      lookAt[1] + Math.sin(angle) * radius,
+      cameraHeight
+    );
+    camera.lookAt(lookAt[0], lookAt[1], lookAt[2]);
+    frameId = requestAnimationFrame(rotate);
+  };
+  frameId = requestAnimationFrame(rotate);
+  return () => cancelAnimationFrame(frameId);
+};
+
+const show3D = async (sceneId) => {
+  const scene = getSceneById(sceneId);
+  if (!scene?.model) return;
+  const page = document.getElementById(`scene${two(sceneId)}`);
+  const stage = page?.querySelector('.splat-stage');
+  if (!stage) return;
+  setMediaMode(sceneId, '3d');
+  if (splatViewers.has(sceneId)) return;
+	  stage.innerHTML = '<div class="splat-loading">Loading 3D model...</div>';
+	  try {
+	    const GaussianSplats3D = await loadSplatModule();
+	    renderSplatEnvironment(stage);
+	    const cameraConfig = scene.modelCamera || DEFAULT_MODEL_CAMERA;
+	    const viewer = new GaussianSplats3D.Viewer({
+	      rootElement: stage,
+	      cameraUp: cameraConfig.cameraUp,
+	      initialCameraPosition: cameraConfig.initialCameraPosition,
+	      initialCameraLookAt: cameraConfig.initialCameraLookAt,
+	      sharedMemoryForWorkers: false,
+	      gpuAcceleratedSort: false
+	    });
+    await viewer.addSplatScene(scene.model, {
+      showLoadingUI: true,
+      splatAlphaRemovalThreshold: 5
+	    });
+	    viewer.start();
+	    const stopAutoRotate = configureAutoRotate(viewer, scene);
+	    splatViewers.set(sceneId, { viewer, stopAutoRotate });
+	  } catch (error) {
+    console.error('3D model failed to load', error);
+    show3DError(stage, sceneId, 'The Gaussian Splat viewer or model file could not be loaded.');
+  }
+};
+
+const resetMediaMode = () => {
+  scenes.filter((scene) => scene.model).forEach((scene) => show2D(scene.id));
+};
+
+document.querySelectorAll('.media-toggle button').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const sceneId = Number(btn.dataset.sceneId);
+    if (btn.dataset.mediaMode === '3d') {
+      show3D(sceneId);
+      return;
+    }
+    show2D(sceneId);
+  });
+});
+
+const updateSceneState = (previousScene = currentScene) => {
+  const currentItem = deckItems[currentStepIndex];
+  const isPrologue = currentItem.type === 'prologue';
+  const isEnding = currentItem.type === 'ending';
+  const activeTransition = currentItem.type === 'transition' ? getTransitionById(currentItem.id) : null;
+  const activeScene = currentItem.type === 'scene' ? getSceneById(currentItem.sceneId) : null;
+  const activeTheme = isPrologue || isEnding ? 'protocol' : activeTransition?.theme || activeScene.theme;
+
+  if (!isPrologue && prologuePage.contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
+  transitionPages.forEach((page) => {
+    if (page.contains(document.activeElement) && currentItem.id !== page.id) {
+      document.activeElement.blur();
+    }
+  });
+  if (!isEnding && endingPage.contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
+
+  prologuePage.classList.toggle('active', isPrologue);
+  prologuePage.setAttribute('aria-hidden', String(!isPrologue));
+  prologuePage.inert = !isPrologue;
+  transitionPages.forEach((page) => {
+    const isActive = currentItem.type === 'transition' && currentItem.id === page.id;
+    page.classList.toggle('active', isActive);
+    page.classList.toggle('previous', deckItems.findIndex((item) => item.type === 'transition' && item.id === page.id) < currentStepIndex);
+    page.setAttribute('aria-hidden', String(!isActive));
+    page.inert = !isActive;
+  });
+  endingPage.classList.toggle('active', isEnding);
+  endingPage.classList.toggle('previous', isEnding ? false : currentStepIndex > deckItems.findIndex((item) => item.type === 'ending'));
+  endingPage.setAttribute('aria-hidden', String(!isEnding));
+  endingPage.inert = !isEnding;
+  scenePages.forEach((page, idx) => {
+    const id = idx + 1;
+    const isActive = currentItem.type === 'scene' && id === currentItem.sceneId;
+    const pageStep = deckItems.findIndex((item) => item.type === 'scene' && item.sceneId === id);
+    page.classList.toggle('active', isActive);
+    page.classList.toggle('previous', pageStep < currentStepIndex);
+    page.setAttribute('aria-hidden', String(!isActive));
+    page.inert = !isActive;
+  });
+  scenePills.forEach((btn, idx) => btn.classList.toggle('active', currentItem.type === 'scene' && idx + 1 === currentItem.sceneId));
+  actTabs.forEach((btn) => btn.classList.toggle('active', !isPrologue && !isEnding && btn.dataset.actTheme === activeTheme));
+  document.body.dataset.activeTheme = activeTheme;
+  if (isPrologue) {
+    sceneIndex.textContent = 'Prologue / 12';
+    document.title = '共栖之座 · Prologue / 12';
+  } else if (activeTransition) {
+    sceneIndex.textContent = `${activeTransition.to.split(' · ')[0]} / Transition`;
+    document.title = `共栖之座 · ${activeTransition.to.split(' · ')[0]} Transition`;
+  } else if (isEnding) {
+    sceneIndex.textContent = 'Ending / 12';
+    document.title = '共栖之座 · Ending / 12';
+  } else {
+    sceneIndex.textContent = `Scene ${two(activeScene.id)} / 12`;
+    document.title = `共栖之座 · Scene ${two(activeScene.id)} / 12`;
+  }
+  deckProgress.style.width = `${(currentStepIndex / (deckItems.length - 1)) * 100}%`;
+  document.body.dataset.direction = currentStepIndex >= previousScene ? 'forward' : 'back';
+};
+
+const goToStep = (value) => {
+  const next = clampStep(value);
+  if (next === currentStepIndex) return;
+  const previous = currentStepIndex;
+  currentStepIndex = next;
+  const item = deckItems[currentStepIndex];
+  currentScene = item.type === 'scene' ? item.sceneId : 0;
+  resetMediaMode();
+  updateSceneState(previous);
+};
+
+const goToScene = (value) => {
+  const next = clampScene(value);
+  const sceneStep = deckItems.findIndex((item) => item.type === 'scene' && item.sceneId === next);
+  if (sceneStep < 0) return;
+  goToStep(sceneStep);
+};
+
+const stepSlide = (delta) => goToStep(currentStepIndex + delta);
+
+document.getElementById('prevScene').addEventListener('click', () => stepSlide(-1));
+document.getElementById('nextScene').addEventListener('click', () => stepSlide(1));
+
+window.addEventListener('keydown', (event) => {
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(event.key)) {
+    event.preventDefault();
+    stepSlide(1);
+  }
+  if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)) {
+    event.preventDefault();
+    stepSlide(-1);
+  }
+  if (event.key === 'Home') {
+    event.preventDefault();
+    goToStep(0);
+  }
+  if (event.key === 'End') {
+    event.preventDefault();
+    goToStep(deckItems.length - 1);
+  }
+});
+
+window.addEventListener('wheel', (event) => {
+  if (event.target.closest('.scene-media.mode-3d')) return;
+  event.preventDefault();
+  const now = performance.now();
+  if (now - lastWheelAt < 760 || Math.abs(event.deltaY) < 12) return;
+  lastWheelAt = now;
+  stepSlide(event.deltaY > 0 ? 1 : -1);
+}, { passive: false });
+
+let touchStartX = 0;
+let touchStartY = 0;
+window.addEventListener('touchstart', (event) => {
+  touchStartedIn3D = Boolean(event.target.closest('.scene-media.mode-3d'));
+  const touch = event.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+}, { passive: true });
+window.addEventListener('touchend', (event) => {
+  if (touchStartedIn3D) {
+    touchStartedIn3D = false;
+    return;
+  }
+  const touch = event.changedTouches[0];
+  const dx = touch.clientX - touchStartX;
+  const dy = touch.clientY - touchStartY;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < 36) return;
+  stepSlide(Math.abs(dx) > Math.abs(dy) ? (dx < 0 ? 1 : -1) : (dy < 0 ? 1 : -1));
+}, { passive: true });
+
+const preloadImages = () => {
+  scenes.forEach((scene) => {
+    const image = new Image();
+    image.src = scene.img;
+  });
+};
+preloadImages();
+updateSceneState();
+</script>
+</body>
+</html>
